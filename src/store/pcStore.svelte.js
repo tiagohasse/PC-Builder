@@ -1,0 +1,1 @@
+// Estado global da montagem do PC
