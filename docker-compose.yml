@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  frontend-dev:
+    image: node:20-alpine
+    container_name: pc-builder-dev
+    working_dir: /app
+    
+    # Removemos o 'user: "node"' temporariamente para que o root instale as dependências
+    # O comando abaixo cuidará da segurança para nós
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.svelte-kit
+      
+    ports:
+      - "5173:5173"
+      
+    environment:
+      - ORIGIN=http://localhost:5173
+      - SERPAPI_KEY=${SERPAPI_KEY}
+      
+    # O truque: instala como root (com chown para garantir acesso ao usuário node)
+    # e depois troca para o usuário node para rodar o servidor
+    command: >
+      sh -c "chown -R node:node /app && 
+             su node -c 'npm install' && 
+             npm run dev -- --host 0.0.0.0"

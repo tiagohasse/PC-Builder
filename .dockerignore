@@ -1,0 +1,21 @@
+# Evita o envio de dependências pesadas locais para o contexto do Docker
+node_modules
+.svelte-kit
+build
+
+# Ignora credenciais e logs locais
+.env
+.env.*
+*.log
+npm-debug.log*
+
+# Ignora repositório do Git e documentações desnecessárias na imagem
+.git
+.gitignore
+README.md
+routes.md
+
+# Ignora os próprios arquivos de infraestrutura dentro do build do app
+Dockerfile
+docker-compose*
+.dockerignore

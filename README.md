@@ -27,7 +27,7 @@ Uma aplicação web desenvolvida em SvelteKit que atua como um agregador intelig
 
 4. **Inicie o servidor de desenvolvimento:**
    ```bash
-   npm run dev
+   docker-compose -f docker-compose.yml up --build
    ```
 
 5. **Acesse a aplicação:**
