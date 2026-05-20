@@ -16,4 +16,6 @@ declare global {
 	}
 }
 
+declare module '@kbco/pcpartpicker';
+
 export {};

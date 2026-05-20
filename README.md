@@ -1,39 +1,34 @@
-﻿# Arquitetura do Projeto: PC Builder SvelteKit
+﻿# Montador de PC - MVP
 
-Esta estrutura segue os princípios de **Feature-Based Architecture** adaptados ao ecossistema SvelteKit.
+Uma aplicação web desenvolvida em SvelteKit que atua como um agregador inteligente de preços de hardware. O sistema consome a API do Google Shopping (SerpApi) para buscar as peças mais baratas do varejo nacional e permite ao usuário salvar um histórico local dos seus orçamentos.
 
-## Diretórios Principais
+## Tecnologias Utilizadas
+* **Frontend:** Svelte 5 (Runes) e Tailwind CSS
+* **Backend:** SvelteKit API Routes (Node.js)
+* **Integração:** SerpApi (Google Shopping)
+* **Persistência:** LocalStorage (UX sem perdas e Histórico de Dashboard)
 
--   **src/components**: Contém componentes visuais reutilizáveis. Seguir a convenção `PascalCase.svelte`.
--   **src/routes**: Camada de roteamento e páginas. Arquivos `+page.svelte` representam a interface e `+page.server.js` lida com o carregamento de dados e segurança (SSR).
--   **src/lib/features**: O "coração" da aplicação. Contém regras de negócio isoladas por funcionalidade (Compatibilidade, Busca de Preços).
--   **src/services**: Abstrações para chamadas de APIs externas e integrações com o backend agregador.
--   **src/store**: Gerenciamento de estado global da aplicação (ex: as peças atualmente selecionadas no carrinho).
--   **src/hooks**: Scripts que interceptam requisições no servidor ou no cliente.
--   **src/utils**: Funções auxiliares, formatadores e constantes técnicas (ex: mapeamento de soquetes).
+## Como rodar o projeto localmente
 
-## Convenções
--   **Componentes**: PascalCase (ex: `ProductCard.svelte`).
--   **Lógica/Scripts**: camelCase (ex: `compatibilityEngine.js`).
--   **Aliases**: Utilize `@/` para referenciar a raiz de `src`.
+1. **Clone o repositório:**
+   Faça o clone deste repositório para a sua máquina local.
 
-# PC-Builder
+2. **Instale as dependências:**
+   Abra o terminal na pasta raiz do projeto e rode:
+   ```bash
+   npm install
+   ```
 
-**Autor**: Tiago Hasse Niemczewski
+3. **Configure as Variáveis de Ambiente (MUITO IMPORTANTE):**
+   Crie um arquivo chamado `.env` na raiz do projeto (mesmo nível do `package.json`). Você precisará de uma chave gratuita da [SerpApi](https://serpapi.com/). Adicione o seguinte conteúdo ao arquivo:
+   ```env
+   SERPAPI_KEY="sua_chave_aqui_sem_aspas"
+   ```
 
-**Framework Escolhido**: SvelteKit
+4. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   npm run dev
+   ```
 
-## Ideia Preliminar do Projeto
-
-### O Problema
-A montagem de um PC personalizado envolve duas barreiras principais para o consumidor:
-
-* **Compatibilidade técnica:** cruzar gerações de processadores, soquetes de placas-mãe (AM4, AM5, LGA1700) e padrões de memória (DDR4, DDR5) exige conhecimento técnico, e erros geram prejuízo financeiro.
-* **Fragmentação de preços:** os valores dos componentes flutuam diariamente em múltiplas lojas varejistas. Fazer essa pesquisa manualmente e validar as peças de forma cruzada toma muito tempo e dificulta a busca pelo menor orçamento possível.
-
-### A Solução Proposta
-Desenvolver uma aplicação full-stack de montagem de computadores atuando em duas frentes:
-
-1. **Frontend Reativo:** Utilizando a velocidade do Svelte para aplicar filtros instantâneos. Ao selecionar um processador, o sistema invalida e esconde placas-mãe incompatíveis em tempo real.
-2. **Backend Agregador:** Utilizando o servidor do SvelteKit para realizar requisições simultâneas às APIs de lojas de hardware, centralizando e comparando os menores preços do mercado sem expor a lógica de busca no navegador do usuário. O servidor também garantirá a geração de links compartilháveis dos setups montados (via Server-Side Rendering).
-
+5. **Acesse a aplicação:**
+   Abra o seu navegador e acesse `http://localhost:5173`.
