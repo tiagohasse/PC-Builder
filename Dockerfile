@@ -13,6 +13,8 @@ RUN --mount=type=secret,id=serpapi_key \
     export SERPAPI_KEY=$(cat /run/secrets/serpapi_key) && \
     npm run build
 
+COPY --from=builder /app/build ./build
+
 RUN npm prune --production
 # ... resto do Dockerfile permanece igual
 
