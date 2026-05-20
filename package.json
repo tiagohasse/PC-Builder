@@ -39,7 +39,6 @@
 		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
-		"@better-auth/cli": "~1.4.21",
 		"@eslint/compat": "^2.0.4",
 		"@eslint/js": "^10.0.1",
 		"@sveltejs/adapter-auto": "^7.0.1",
@@ -49,9 +48,6 @@
 		"@tailwindcss/forms": "^0.5.11",
 		"@tailwindcss/vite": "^4.2.2",
 		"@types/node": "^22",
-		"better-auth": "~1.4.21",
-		"drizzle-kit": "^0.31.10",
-		"drizzle-orm": "^0.45.2",
 		"eslint": "^10.2.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.17.0",
