@@ -7,7 +7,6 @@
 
     const navLinks = [
         { href: '/', label: 'Início' },
-        { href: '/pecas', label: 'Catálogo' },
         { href: '/setups/novo', label: 'Montar PC' },
         { href: '/dashboard', label: 'Meu Painel' }
     ] as const;
