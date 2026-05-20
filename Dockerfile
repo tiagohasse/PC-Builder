@@ -2,17 +2,19 @@
 FROM node:20-alpine AS builder
 
 WORKDIR /app
-
-# Instala dependências primeiro para aproveitar o cache de camadas do Docker
 COPY package*.json ./
 RUN npm ci
 
-# Copia o restante do código fonte e compila o projeto
+# Copia o código
 COPY . .
-RUN npm run build
 
-# Remove dependências de desenvolvimento para economizar espaço
+# Usamos --mount=type=secret para injetar a chave apenas durante o build
+RUN --mount=type=secret,id=serpapi_key \
+    export SERPAPI_KEY=$(cat /run/secrets/serpapi_key) && \
+    npm run build
+
 RUN npm prune --production
+# ... resto do Dockerfile permanece igual
 
 
 # STAGE 2: Runtime (Imagem final ultra-leve baseada em Alpine)
