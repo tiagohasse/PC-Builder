@@ -14,7 +14,7 @@ services:
       - /app/.svelte-kit
       
     ports:
-      - "3007:5173"
+      - "5173:5173"
       
     environment:
       - ORIGIN=http://localhost:5173

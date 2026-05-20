@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     
     ports:
-      - "5173:5173"
+      - "3007:5173"
       
     environment:
       - ORIGIN=${ORIGIN:-http://localhost:5173}
