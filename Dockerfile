@@ -8,15 +8,12 @@ RUN npm install
 # Copia o código
 COPY . .
 
-# Usamos --mount para injetar o segredo durante o build
-# O build do SvelteKit gera a pasta /app/build
-RUN --mount=type=secret,id=serpapi_key \
-    export SERPAPI_KEY=$(cat /run/secrets/serpapi_key) && \
-    npm run build
+# Recebe a chave do Docker Compose e injeta no ambiente de build
+ARG SERPAPI_KEY
+ENV SERPAPI_KEY=$SERPAPI_KEY
 
-# Remove dependências de desenvolvimento APÓS o build
+RUN npm run build
 RUN npm prune --production
-
 
 # STAGE 2: Runtime
 FROM node:20-alpine AS runner
