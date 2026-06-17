@@ -8,6 +8,7 @@
         preco: number;
         loja: string;
         nomeReal: string;
+        link: string;
     }
 
     interface SetupSalvo {
@@ -96,10 +97,25 @@
                                     <div class="flex flex-col items-end whitespace-nowrap">
                                         <span class="font-mono text-slate-300 mt-1">R$ {peca.preco.toFixed(2)}</span>
                                         {#if peca.loja}
-                                            <span class="text-[10px] text-slate-500 mt-0.5 max-w-25 truncate" title={peca.nomeReal}>
-                                                via {peca.loja}
-                                            </span>
-                                        {/if}
+        {#if peca.link}
+            <a 
+                href={peca.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-[10px] text-slate-500 mt-0.5 max-w-25 truncate hover:underline"
+                title={peca.nomeReal}
+            >
+                via {peca.loja}
+            </a>
+        {:else}
+            <span 
+                class="text-[10px] text-slate-500 mt-0.5 max-w-25 truncate cursor-help" 
+                title={peca.nomeReal}
+            >
+                via {peca.loja}
+            </span>
+        {/if}
+    {/if}
                                     </div>
                                 </li>
                             {/each}

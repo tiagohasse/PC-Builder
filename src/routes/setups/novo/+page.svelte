@@ -14,11 +14,13 @@
     ] as const;
 
     let setup = $state(
-        categorias.reduce((acc, cat) => {
-            acc[cat.id] = { termo: '', preco: 0, loja: '', nomeReal: '' };
-            return acc;
-        }, {} as Record<string, { termo: string; preco: number; loja: string; nomeReal: string }>)
-    );
+    categorias.reduce((acc, cat) => {
+        // Adicionado: link: ''
+        acc[cat.id] = { termo: '', preco: 0, loja: '', nomeReal: '', link: '' }; 
+        return acc;
+    // Adicionado: link: string na tipagem
+    }, {} as Record<string, { termo: string; preco: number; loja: string; nomeReal: string; link: string }>) 
+);
 
     let tentouFinalizar = $state(false);
     let carregando = $state(false);
@@ -93,22 +95,24 @@
             try {
                 const resultados = await buscarPrecos(pecasPreenchidas);
                 
-                resultados.forEach((resultado: { id: string; preco: number; loja?: string; debug_nome?: string }) => {
+                resultados.forEach((resultado: { id: string; preco: number; loja?: string; debug_nome?: string; link?: string }) => {
                     setup[resultado.id].preco = resultado.preco;
                     setup[resultado.id].loja = resultado.loja || '';
                     setup[resultado.id].nomeReal = resultado.debug_nome || '';
+                    setup[resultado.id].link = resultado.link || '';
                 });
 
                 // --- INÍCIO DO CÓDIGO NOVO: Salvar no Histórico ---
                 // Definimos o formato que a API devolve
-                type ResultadoAPI = { id: string; preco: number; loja?: string; debug_nome?: string };
+                type ResultadoAPI = { id: string; preco: number; loja?: string; debug_nome?: string; link?: string };
                 
                 const pecasValidas = resultados.map((r: ResultadoAPI) => ({
                     categoria: categorias.find(c => c.id === r.id)?.nome || r.id,
                     termo: setup[r.id].termo,
                     preco: r.preco,
                     loja: r.loja || '',
-                    nomeReal: r.debug_nome || ''
+                    nomeReal: r.debug_nome || '',
+                    link: r.link || ''
                 }));
 
                 // Tipamos a variável 'p' para avisar que ela contém pelo menos um 'preco' numérico
@@ -175,15 +179,31 @@
                 </div>
 
                 <div class="col-span-2 flex flex-col items-start md:items-end justify-center font-mono">
-                    <span class="text-orange-400 font-semibold">
-                        R$ {setup[cat.id].preco.toFixed(2)}
-                    </span>
-                    {#if setup[cat.id].loja}
-                        <span class="text-[10px] text-slate-500 mt-0.5 truncate max-w-full cursor-help" title={setup[cat.id].nomeReal}>
-                            via {setup[cat.id].loja}
-                        </span>
-                    {/if}
-                </div>
+    <span class="text-orange-400 font-semibold">
+        R$ {setup[cat.id].preco.toFixed(2)}
+    </span>
+    
+    {#if setup[cat.id].loja}
+        {#if setup[cat.id].link}
+            <a 
+                href={setup[cat.id].link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-[10px] text-slate-500 mt-0.5 truncate max-w-full hover:underline"
+                title={setup[cat.id].nomeReal}
+            >
+                via {setup[cat.id].loja}
+            </a>
+        {:else}
+            <span 
+                class="text-[10px] text-slate-500 mt-0.5 truncate max-w-full cursor-help" 
+                title={setup[cat.id].nomeReal}
+            >
+                via {setup[cat.id].loja}
+            </span>
+        {/if}
+    {/if}
+</div>
             </div>
         {/each}
 

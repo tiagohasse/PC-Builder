@@ -32,7 +32,8 @@ export async function POST({ request }) {
                         id: String(peca.id).substring(0, 50),
                         preco: Number(melhorOpcao.extracted_price) || 0,
                         debug_nome: String(melhorOpcao.title),
-                        loja: String(melhorOpcao.source)
+                        loja: String(melhorOpcao.source),
+                        link: String(melhorOpcao.product_link || melhorOpcao.link || "")
                     });
                 } else {
                     precosEncontrados.push({ id: peca.id, preco: 0 });
